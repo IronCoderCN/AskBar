@@ -1,0 +1,56 @@
+/* 主题配置 */
+/*.themeIcon Icon{*/
+/*color: #19be6b;*/
+/*}*/
+/* 页面布局 layout css */
+.layout {
+    border: 0px solid #d7dde4;
+    background: #f5f7f9;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.layout-logo {
+    width: 200px;
+    height: 60px;
+    border-radius: 3px;
+    float: left;
+    position: relative;
+    left: 200px;
+}
+
+.layout-nav {
+    width: 1000px;
+    float: right;
+    margin-right: 0px;
+}
+
+.layout-footer-center {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.searchBox {
+    top: 15px;
+    width: 200px;
+    float: left;
+    margin-left: 200px;
+}
+
+.menuLayout {
+    width: 250px;
+    float: right;
+    margin-right: 200px;
+}
+
+.menuButton {
+    float: left;
+    margin-top: 15px;
+    margin-left: 40px;
+
+}
+.ivu-form-item-error-tip{
+    text-align: center;
+}

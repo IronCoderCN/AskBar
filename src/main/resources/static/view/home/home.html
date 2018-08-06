@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>问吧</title>
+    <link rel="shortcut icon" href="../../images/title.png"/>
+    　　
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
+    <link rel="stylesheet" type="text/css" href="../../css/layout.css">
+</head>
+<body>
+<div id="body" class="layout">
+    <template>
+        <div class="layout">
+            <Layout>
+                <Header style="position: fixed; width: 100%">
+                    <i-menu mode="horizontal" theme="light" active-name="1">
+                        <div class="layout-logo">
+                            <img src="../../images/logo.png">
+                        </div>
+                        <div class="layout-nav">
+                            <i-input v-model="searchText" search class="searchBox" placeholder="搜索问答..."
+                                     @on-search="search()"></i-input>
+                            <i-button type="success" icon="md-create" class="menuButton">提问</i-button>
+                            <div id="userMenu" class="menuLayout">
+                                <Submenu name="1">
+                                    <template slot="title">
+                                        <Icon size="30" type="ios-notifications"></Icon>
+                                    </template>
+                                    <Menu-item name="1-1">
+                                        <Icon size="20" color="#19be6b" type="md-text"></Icon>
+                                        评论
+                                    </Menu-item>
+                                    <Menu-item name="1-2">
+                                        <Icon size="20" color="#19be6b" type="md-mail"></Icon>
+                                        私信
+                                    </Menu-item>
+                                    <Menu-item name="1-3">
+                                        <Icon size="20" color="#19be6b" type="md-thumbs-up"></Icon>
+                                        赞
+                                    </Menu-item>
+                                    <Menu-item name="1-4">
+                                        <Icon size="20" color="#19be6b" type="md-heart"></Icon>
+                                        感谢
+                                    </Menu-item>
+                                    <Menu-item name="1-5">
+                                        <Icon size="20" color="#19be6b" type="md-star"></Icon>
+                                        收藏
+                                    </Menu-item>
+                                    <Menu-item name="1-6">
+                                        <Icon size="20" color="#19be6b" type="md-information-circle"></Icon>
+                                        系统通知
+                                    </Menu-item>
+                                </Submenu>
+                                <Submenu name="2">
+                                    <template slot="title">
+                                        <!--<Avatar icon="ios-person" />-->
+                                        <Icon size="36" type="md-person"></Icon>
+                                        <output :v-model="user.name"></output>
+                                    </template>
+                                    <Menu-item name="2-1">
+                                        <Icon size="20" color="#19be6b" type="md-home"></Icon>
+                                        我的主页
+                                    </Menu-item>
+                                    <Menu-item name="2-2">
+                                        <Icon size="20" color="#19be6b" type="md-settings"></Icon>
+                                        设置
+                                    </Menu-item>
+                                    <Menu-item name="2-3">
+                                        <Icon size="20" color="#19be6b" type="md-help"></Icon>
+                                        帮助
+                                    </Menu-item>
+                                    <Menu-item name="2-4">
+                                        <Icon size="20" color="#19be6b" type="md-help"></Icon>
+                                        帮助
+                                    </Menu-item>
+                                    <Menu-item name="2-5">
+                                        <Icon size="20" color="#19be6b" type="md-chatboxes"></Icon>
+                                        反馈
+                                    </Menu-item>
+                                    <Menu-item name="2-6">
+                                        <Icon size="20" color="#19be6b" type="md-log-out"></Icon>
+                                        登出
+                                    </Menu-item>
+                                </Submenu>
+                            </div>
+                            <i-button id="loginButton" type="success" icon="md-create" class="menuButton"
+                                      @click="loginModal=true">登录
+                            </i-button>
+                            <i-button id="registerButton" type="success" icon="md-create" class="menuButton">注册
+                            </i-button>
+                        </div>
+                    </i-menu>
+                </Header>
+                <Content id="content" style="margin: 0px 200px 0px 200px; ">
+                    <div id="sonContent0"
+                         style="min-height: 50px; background: #f6f6ed;
+                         margin: 8px 50px 0px 50px; border-radius:4px; box-shadow: 0 5px 5px rgba(26,26,26,.1);">
+                        news1
+                    </div>
+                </Content>
+                <Footer class="layout-footer-center">Build for those who is fighting for their dream by ICEMAN.</Footer>
+            </Layout>
+        </div>
+    </template>
+    <template>
+        <Modal footer-hide v-model="loginModal">
+            <div style="width: 200px; margin-left: 144px">
+                <i-form :model="userInfo" :rules="userInfoRule">
+                    <form-item prop="userName">
+                        <i-input v-model="userInfo.userName" type="text" prefix="md-contact" placeholder="手机号或邮箱"
+                                 style="width: 200px;"></i-input>
+                    </form-item>
+                    <form-item prop="password">
+                        <i-input v-model="userInfo.password" type="password" prefix="md-lock" placeholder="密码"
+                                 style="width: 200px;"></i-input>
+                    </form-item>
+                    <Checkbox style="float: left;" v-model="rememberMe">记住我</Checkbox>
+                    <a style="float: right; ">忘记密码？</a>
+                    <div style="margin-top: 50px;">
+                        <i-button type="success" long="100%">登录</i-button>
+                    </div>
+                    <Divider><span style="font-size: 12px;">更多登录方式</span></Divider>
+                    <center>
+                        <div style="height: 30px;">
+                            <img src="../../images/wechat.png" onclick="window.open('http://www.tencent.com')">
+                            <img src="../../images/qq.png" onclick="window.open('http://www.tencent.com')">
+                        </div>
+                    </center>
+                </i-form>
+            </div>
+
+        </Modal>
+        <Modal>
+            <div style="width: 200px; margin-left: 144px">
+                <i-form :model="userInfo" :rules="userInfoRule">
+                    <form-item prop="userName">
+                        <i-input v-model="userInfo.userName" type="text" prefix="md-contact" placeholder="昵称"
+                                 style="width: 200px;"></i-input>
+                    </form-item>
+                    <form-item prop="password">
+                        <i-input v-model="userInfo.password" type="password" prefix="md-lock" placeholder="邮箱"
+                                 style="width: 200px;"></i-input>
+                    </form-item>
+                    <form-item prop="password">
+                        <i-input v-model="userInfo.password" type="password" prefix="md-lock" placeholder="密码"
+                                 style="width: 200px;"></i-input>
+                    </form-item>
+                    <form-item prop="password">
+                        <i-input v-model="userInfo.password" type="password" prefix="md-lock" placeholder="确认密码"
+                                 style="width: 200px;"></i-input>
+                    </form-item>
+                    <div style="margin-top: 50px;">
+                        <i-button type="success" long="100%">注册</i-button>
+                    </div>
+                    <Divider><span style="font-size: 12px;">社交帐号直接注册</span></Divider>
+                    <center>
+                        <div style="height: 30px;">
+                            <img src="../../images/wechat.png" onclick="window.open('http://www.tencent.com')">
+                            <img src="../../images/qq.png" onclick="window.open('http://www.tencent.com')">
+                        </div>
+                    </center>
+                </i-form>
+            </div>
+        </Modal>
+    </template>
+</div>
+<script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
+<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
+<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    var homeVue = new Vue({
+        el: '#body',
+        mounted: function () {
+            //判断登录状态
+            var isLogin = false;
+            if (isLogin) {
+                $("#loginButton").hide();
+                $("#registerButton").hide();
+                $("#userMenu").show();
+            } else if (!isLogin){
+                $("#loginButton").show();
+                $("#registerButton").show();
+                $("#userMenu").hide();
+            }
+            //动态添加node
+            var sourceSonNode = document.getElementById("sonContent0");
+            for (i = 1; i <= this.$data.sonContentNumber; i++) {
+                var newSonNode = sourceSonNode.cloneNode(true);
+                newSonNode.setAttribute("id", "sonContent" + i);
+                sourceSonNode.parentNode.appendChild(newSonNode);
+            }
+        },
+        data: {
+            userInfo: {
+                userName: '',
+                password: '',
+            },
+            userInfoRule: {
+                userName: [
+                    {required: true, message: '手机号或邮箱不能为空！', trigger: 'blur'}
+                ],
+                password: [
+                    {required: true, message: '密码不能为空！', trigger: 'blur'},
+                    {type: 'string', min: 6, message: '密码长度应大于6位！', trigger: 'blur'}
+                ],
+            },
+            rememberMe: false,
+            loginModal: false,
+            searchText: "",
+            user: {
+                name: 'Dper',
+            },
+            sonContentNumber: 3,
+            file: [],
+            form: {
+                input: '',
+            }
+        },
+        methods: {
+            search: function () {
+                alert(this.searchText);
+            },
+            openLoginDialog: function () {
+
+            },
+            ok() {
+                this.$Message.info('Clicked ok');
+            },
+            cancel() {
+                this.$Message.info('Clicked cancel');
+            }
+        }
+    })
+</script>
+</body>
+</html>
